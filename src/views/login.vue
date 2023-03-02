@@ -102,6 +102,7 @@ export default {
       padding-top: 10px;
 
       .login-dl {
+        text-align: center;
         font-size: 22px;
         font-weight: 700;
       }

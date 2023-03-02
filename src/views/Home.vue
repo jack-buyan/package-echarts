@@ -1,59 +1,46 @@
 <template>
-  <div>
-    <One/>
-<!--    <Bar :chart-data="barChartData" :chart-option="{}" :series-opeion="{}" chart-id="barChart" class="chart" />-->
-
-<!--    <Bar :chart-data="dalChartData" :chart-option="{}" :series-opeion="{showBackground: true,}" chart-id="barChart2" class="chart" />-->
+  <div id="index">
+    <Header />
+    <div class="localTime"> {{ dateYear }}{{ dateWeek }} {{ dateDay }}</div>
+    <One />
   </div>
 </template>
 
 <script>
+  import Header from '@/components/header.vue'
   import One from '@/views/layout/one/index.vue'
+  import {
+    formatTime
+  } from '../utils/formatTime';
 
   export default {
     name: 'Home',
     components: {
-      One
+      One,
+      Header
     },
     data() {
-      return  {
-        barChartData:{
-
-        },
-        dalChartData:{}
+      return {
+        //时间
+        dateDay: null,
+        dateYear: null,
+        dateWeek: null,
+        weekday: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+        timer: null
       }
     },
     mounted() {
-      this.initPage()
+      this.timeInterval()
     },
     methods: {
-      initPage() {
+      timeInterval() {
+        this.timer = setInterval(() => {
+          this.dateDay = formatTime(new Date(), 'HH:mm: ss')
+          this.dateYear = formatTime(new Date(), 'yyyy/MM/dd')
+          this.dateWeek = this.weekday[new Date().getDay()]
 
-        this.dalChartData = {
-          name: '双型柱状图',
-          xAxisData: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          seriesData: [{
-            data: [120, 200, 150, 80, 70, 110, 130],
-            type: 'bar',
-          },
-            {
-              data: [120, 200, 150, 80, 70, 110, 130],
-              type: 'bar',
-            }
-          ],
-          chartOption: {
+        }, 1000)
 
-          }
-        }
-        //柱状图
-        this.barChartData = {
-          name: '单型柱状图',
-          xAxisData: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          seriesData: [{
-            data: [120, 200, 150, 80, 70, 110, 130],
-            type: 'bar'
-          }]
-        }
       }
     }
   }

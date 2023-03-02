@@ -16,9 +16,17 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 
+// px2rem 自适应
+import 'lib-flexible'
+
+
+// import VScaleScreen from 'v-scale-screen'
+// Vue.use(VScaleScreen)
+
+
 // 引入全局css
 import '@/assets/scss/style.scss';
-
+import '@/assets/scss/oneStyle.scss';
 new Vue({
   router,
   store,

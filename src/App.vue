@@ -4,15 +4,28 @@
   </div>
 </template>
 
-<style lang="scss">
-body{
-  width: 100vw;
-  height: 100vh;
+<script>
+export default{
 }
-#app {
-  width: 100%;  // 根据设计图实际尺寸开发
-  height:100%;  // 根据设计图实际尺寸开发
-  transform-origin: 0 0;
+</script>
 
+<style lang="scss">
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  overflow: hidden;
+
+}
+.screen-box {
+  //
+  //background: red  !important;
+}
+.screen-wrapper{
+
+
+  //margin: 0 !important;
 }
 </style>

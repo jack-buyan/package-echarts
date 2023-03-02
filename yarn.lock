@@ -3570,6 +3570,11 @@
     "picocolors" "^1.0.0"
     "shell-quote" "^1.7.3"
 
+"lib-flexible@^0.3.2":
+  "integrity" "sha512-9yowMWA70tKhKdCJDaltY0mNQG4OWo7pWKScnTp9aiSxS7s20ZYlwBRE3335nweOf5qKXVC7sDxJwMPM8/MFZg=="
+  "resolved" "https://registry.npmmirror.com/lib-flexible/-/lib-flexible-0.3.2.tgz"
+  "version" "0.3.2"
+
 "lilconfig@^2.0.3":
   "integrity" "sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg=="
   "resolved" "https://registry.npmmirror.com/lilconfig/-/lilconfig-2.0.6.tgz"
@@ -5378,6 +5383,11 @@
   "integrity" "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="
   "resolved" "https://registry.npmmirror.com/uuid/-/uuid-8.3.2.tgz"
   "version" "8.3.2"
+
+"v-scale-screen@^1.0.2":
+  "integrity" "sha512-qMXPglHIs8KnhzDBdEBLcIoF3q7jgFCTWNIVPD5M0FGBkD+amYjbFUoLdKol/Xylm+pli4AHOZOqwyL6xX62SA=="
+  "resolved" "https://registry.npmmirror.com/v-scale-screen/-/v-scale-screen-1.0.2.tgz"
+  "version" "1.0.2"
 
 "validate-npm-package-license@^3.0.1":
   "integrity" "sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew=="

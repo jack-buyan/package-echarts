@@ -1,27 +1,51 @@
 <template>
   <div id="index">
-   <div style="display: flex">
-     <div style="width: 500px; height: 500px; background: green;">hqwhehv</div>
-     <div style="width: 500px; height: 500px; background: gold;">hqwhehv</div>
-   </div>
+    <div class="one_box">
+      <div class="box_left">
+        <div class="box_left_one" style="padding:0.125rem;">
+          <ChartTitle title="数据使用情况" />
+          <Bar :chart-data="dalBarChart" :chart-option="{ }" :series-opeion="{}" chart-id="dalBarChart" class="chart" />
+        </div>
+        <div class="box_left_two"></div>
+        <div class="box_left_three"></div>
+      </div>
+      <div class="box_center">center</div>
+      <div class="box_right">right</div>
+    </div>
   </div>
 </template>
 
 <script>
-
-export default {
-  name: 'HomeView',
-  components: {
-
-  },
-  data(){
-    return{
-
+  import Bar from '@/components/Bar.vue';
+  import ChartTitle from '@/components/chartTitle.vue';
+  export default {
+    components: {
+      Bar,
+      ChartTitle
+    },
+    data() {
+      return {
+        dalBarChart: {}
+      }
+    },
+    mounted() {
+      this.initPage()
+    },
+    methods: {
+      initPage() {
+        //柱状图
+        this.dalBarChart = {
+          seriesData: [{
+            data: [120, 200, 150, 80, 70, 110, 130],
+            type: 'bar'
+          }]
+        }
+      }
     }
-  },
-  methods:{
 
   }
-
-}
 </script>
+
+<style>
+
+</style>
