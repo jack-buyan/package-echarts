@@ -15,10 +15,10 @@
 
         let option = {
           grid: {
-
+            top: '2',
             left: '0',
             right: '0',
-            bottom: '0',
+            bottom: '15%',
             containLabel: true
           },
           xAxis: {

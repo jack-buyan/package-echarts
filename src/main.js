@@ -19,6 +19,9 @@ Vue.use(ElementUI);
 // px2rem 自适应
 import 'lib-flexible'
 
+import dataV from '@jiaminghi/data-view'
+Vue.use(dataV)
+
 
 // import VScaleScreen from 'v-scale-screen'
 // Vue.use(VScaleScreen)

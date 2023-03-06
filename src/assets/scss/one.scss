@@ -1,0 +1,28 @@
+.contents {
+  width: 100%;
+  display: flex;
+  min-height: calc(100% - 60px);
+  justify-content: space-between;
+
+
+  //左边 右边 结构一样
+  .contetn_left,
+  .contetn_right {
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-around;
+    position: relative;
+    width: 25%;
+  }
+
+  //左边
+  .contetn_lr-item{
+    height: 320px;
+    width: 100%;
+    background: red;
+  }
+
+
+  //右边
+  .contetn_right{}
+}

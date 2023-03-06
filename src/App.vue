@@ -1,31 +1,18 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-export default{
-}
+  export default {}
 </script>
 
 <style lang="scss">
-
-* {
-  margin: 0;
-  padding: 0;
-}
-body {
-  overflow: hidden;
-
-}
-.screen-box {
-  //
-  //background: red  !important;
-}
-.screen-wrapper{
-
-
-  //margin: 0 !important;
-}
+  #app {
+    width: 100vw;
+    height: 100vh;
+    background-color: #03050C;
+    // overflow: hidden;
+  }
 </style>
