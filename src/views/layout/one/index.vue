@@ -11,19 +11,19 @@
       <div class="layoutHome">
         <el-row>
           <el-col :span="6">
-            <div :style="{ height: kHFive + 'px'}">
+            <div :style="{ height: kHOne + 'px'}">
               <dv-border-box-12 style="padding:12px">
-                <rightchart1></rightchart1>
+
               </dv-border-box-12>
             </div>
-            <div :style="{ height: kHSix + 'px'}">
+            <div :style="{ height: kHTwo + 'px'}">
               <dv-border-box-12 style="padding:12px">
-                <rightchart2></rightchart2>
+
               </dv-border-box-12>
             </div>
-            <div :style="{ height: kHSeven + 'px'}">
+            <div :style="{ height: kHTwo + 'px'}">
               <dv-border-box-12 style="padding:12px">
-                <rightchart3></rightchart3>
+
               </dv-border-box-12>
             </div>
 
@@ -33,28 +33,28 @@
           <el-col :span="12">
             <div :style="{ height: kHThree + 'px'}">
               <dv-border-box-12 style="padding:12px">
-                <center></center>
+
               </dv-border-box-12>
             </div>
-            <div :style="{ height: kHFour + 'px'}">
+            <div :style="{ height: kHFive + 'px'}">
               <dv-border-box-12 style="padding:12px">
-                <!--                <centerchart1></centerchart1>-->
+
               </dv-border-box-12>
             </div>
           </el-col>
 
           <el-col :span="6">
 
-            <div :style="{ height: this.kHOne + 'px'}">
+            <div :style="{ height: kHFour + 'px'}">
               <dv-border-box-12 style="padding:12px">
-                <leftchart1></leftchart1>
+
               </dv-border-box-12>
             </div>
 
-            <div :style="{ height: kHTwo + 'px'}">
+            <div :style="{ height: kHFour + 'px'}">
               <!-- style="padding:12px" -->
               <dv-border-box-12 style="padding:12px">
-                <leftchart-2></leftchart-2>
+
               </dv-border-box-12>
             </div>
           </el-col>
@@ -74,25 +74,12 @@
   import {
     formatTime
   } from '@//utils/index.js'
-  import leftchart1 from "@/components/ems/left/chart1.vue";
-  import leftchart2 from "@/components/ems/left/chart2.vue";
-  import center from "@/components/ems/center/center.vue";
-  import centerchart1 from "@/components/ems/center/chart1.vue";
-  import rightchart1 from "@/components/ems/right/chart1.vue";
-  import rightchart2 from "@/components/ems/right/chart2.vue";
-  import rightchart3 from "@/components/ems/right/chart3.vue";
+
   export default {
     name: 'index',
     mixins: [drawMixin],
     components: {
       Header,
-      center,
-      leftchart1,
-      leftchart2,
-      centerchart1,
-      rightchart1,
-      rightchart2,
-      rightchart3
     },
     data() {
       return {}
@@ -107,7 +94,10 @@
 
     methods: {
       ModifyHeight() {
-        this.kHOne = 500
+        this.kHOne = 290
+        this.kHTwo = 356
+        this.kHThree = 600
+        this.kHFive = 400
       }
     }
   }
