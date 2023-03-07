@@ -1,68 +1,43 @@
 <template>
-  <div id="index" ref="appRef">
-    <div class="bg">
-      <dv-loading v-if="loading">Loading...</dv-loading>
-      <div v-else class="host-body">
-        <!-- 布局  -->
-        <One />
-      </div>
-    </div>
-  </div>
 
-
+  <VScaleScreen fullScreen width="1920" height="1080">
+    <One />
+  </VScaleScreen>
 
 </template>
 
 <script>
-  import drawMixin from "../utils/drawMixin";
 
   import One from '@/views/layout/one/index.vue'
-  import {
-    formatTime
-  } from '../utils/formatTime'
   export default {
-    mixins: [drawMixin],
-    data() {
-      return {
-        timing: null,
-        loading: true,
-        dateDay: null,
-        dateYear: null,
-        dateWeek: null,
-        weekday: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-      }
-    },
+    name:'home',
     components: {
-      One
+      One,
     },
-    mounted() {
-      this.timeFn()
-      this.cancelLoading()
-    },
-    beforeDestroy() {
-      clearInterval(this.timing)
-    },
-    methods: {
-      timeFn() {
-        this.timing = setInterval(() => {
-          this.dateDay = formatTime(new Date(), 'HH: mm: ss')
-          this.dateYear = formatTime(new Date(), 'yyyy-MM-dd')
-          this.dateWeek = this.weekday[new Date().getDay()]
-        }, 1000)
-      },
-      cancelLoading() {
-        setTimeout(() => {
-          this.loading = false
-        }, 500)
+
+    data(){
+      return{
+
       }
     }
   }
+
 </script>
 
-<style lang="scss" scoped>
-  //.scale-wrap{
-  //  margin:0px !important;
-  //
-  //}
-  @import '../assets/scss/home.scss';
+<style lang="less" scoped>
+  #index {
+    color: #d3d6dd;
+    //width: 1920px;
+    //height: 1080px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: left top;
+    overflow: hidden;
+
+  }
+::v-deep .screen-wrapper{
+  //transform: scale(1, 0.98 );
+}
 </style>
