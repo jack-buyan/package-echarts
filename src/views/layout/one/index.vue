@@ -58,10 +58,10 @@
 
               </dv-border-box-12>
             </div>
-            <div :style="{ height: kHFive + 'px'}">
-              <dv-border-box-12 style="padding:12px">
+            <div :style="{ height: kHFive + 'px'}" style="padding:12px">
+              <ChartTitle title="重大项目列表" />
 
-              </dv-border-box-12>
+              <CarouselTable :chart-data="zdDataTable" />
             </div>
           </el-col>
 
@@ -96,6 +96,7 @@
   import chartSelect from '@/components/chartSelect.vue'
   import Header from '@/components/Header.vue';
   import EchartPie from '@/components/echarts1/chartPie.vue'
+  import CarouselTable from '@/components/echarts1/carouselTable.vue'
   import {
     drawMixin
   } from '@/utils/layout'
@@ -115,13 +116,15 @@
       DataOverview,
       ChartLine,
       chartSelect,
-      EchartPie
+      EchartPie,
+      CarouselTable
     },
     data() {
       return {
         // sjgkList: [],
         // lineChart: {},
         // pieChartData: {},
+        fatherName: [],
         options: [{
           value: '1',
           label: '1月'
@@ -132,7 +135,7 @@
 
     },
     mounted() {
-      console.log(this.pieChartData);
+      this.fatherName = this.zdDataTable
 
 
       this.ModifyHeight()
@@ -141,7 +144,7 @@
 
     methods: {
       changeFn(val) {
-        console.log(val)
+
       },
       ModifyHeight() {
         this.kHOne = 290

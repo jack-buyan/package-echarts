@@ -30,9 +30,25 @@ module.exports = defineConfig({
       }
     }
   },
+  // devServer: {
+  //   port: 8017,
+  //   open: false // 自动打开浏览器
+  // }
+
   devServer: {
-    port: 8017,
-    open: false // 自动打开浏览器
-  }
+    // 配置多个代理
+    proxy: {
+      '/api': {
+        target: 'http://192.168.0.43:8100/api',
+        // https://geo.datav.aliyun.com/areas_v3
+        ws: false,
+        changeOrigin: true,  //是否允许跨域
+        pathRewrite: { //路径重写
+          '^/api': '/'
+        }
+      },
+
+    }
+  },
 
 })

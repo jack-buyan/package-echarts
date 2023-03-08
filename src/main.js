@@ -40,6 +40,8 @@ Vue.use(scroll)
 // 在别的组件中 this.$axios
 //Vue.prototype.$axios = axios
 
+
+
 // 引入全局css
 import './assets/less/style.less';
 
