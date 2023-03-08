@@ -4,10 +4,10 @@ module.exports = defineConfig({
   chainWebpack: config => {
     config.plugin('html')
       .tap(args => {
-          // 修改完浏览器网页标题需要重启项目才能生效
-          args[0].title = '小锦鲤可视化平台';
-          return args;
-        }
+        // 修改完浏览器网页标题需要重启项目才能生效
+        args[0].title = '可视化平台';
+        return args;
+      }
       )
   },
   lintOnSave: false,
@@ -17,18 +17,18 @@ module.exports = defineConfig({
   assetsDir: "static", //放置生成的静态文件目录（js css img）
   productionSourceMap: false, // 生产环境是否生成 sourceMap 文件
   // 警告 webpack 的性能提示
-  configureWebpack : {
+  configureWebpack: {
     performance: {
-        hints:'warning',
-        // 入口起点的最大体积 整数类型（以字节为单位）
-        maxEntrypointSize: 50000000,
-        // 生成文件的最大体积 整数类型（以字节为单位 300k）
-        maxAssetSize: 30000000,
-        // 只给出 js 文件的性能提示
-        assetFilter: function(assetFilename) {
-            return assetFilename.endsWith('.js');
-        }
-     }
+      hints: 'warning',
+      // 入口起点的最大体积 整数类型（以字节为单位）
+      maxEntrypointSize: 50000000,
+      // 生成文件的最大体积 整数类型（以字节为单位 300k）
+      maxAssetSize: 30000000,
+      // 只给出 js 文件的性能提示
+      assetFilter: function (assetFilename) {
+        return assetFilename.endsWith('.js');
+      }
+    }
   },
   devServer: {
     port: 8017,

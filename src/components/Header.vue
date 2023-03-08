@@ -3,16 +3,26 @@
     <div class="title ">
       <span class="title-text" :style="{'font-size':Math.round(screenWidth/50) + 'px'}">{{title}}</span>
     </div>
-    <div class="btn_left">
+    <div class="btn_left" v-show="title == '嘉数数据分析驾驶舱'">
       <div class="left1">
 
-        <div v-for="(item ,index) in listLeft" @mouseover="over(index)" @mouseout="out(index)">
+        <div v-for="(item ,index) in listLeft" @mouseover="over(index)" @mouseout="out(index)" @click="btn(index+1)">
           <img :src="item.url" alt="">
           <p :style="{'font-size':Math.round(screenWidth/155) + 'px'}">{{item.name}}</p>
         </div>
       </div>
     </div>
-    <div class="btn_right">
+
+    <div class="btn_left" v-show="title !== '嘉数数据分析驾驶舱'" @mouseover="over()" @mouseout="out()" @click="$router.back()">
+      <div class="left1">
+        <div class="left1_fh">
+          <img :src="listLeft[0].url" alt="">
+          <p :style="{'font-size':Math.round(screenWidth/155) + 'px'}">返回</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn_right" v-show="title == '嘉数数据分析驾驶舱'">
       <div class="right">
         <div v-for="(item , index) in listRight" @mouseover="rightOver(index)" @mouseout="rightOut(index)">
           <img :src="item.url" alt="">
@@ -25,7 +35,9 @@
 </template>
 
 <script>
-import {drawMixin} from '@/utils/layout'
+  import {
+    drawMixin
+  } from '@/utils/layout'
   export default {
     name: 'Header',
     props: {
@@ -34,7 +46,7 @@ import {drawMixin} from '@/utils/layout'
         default: '标题'
       }
     },
-     mixins: [drawMixin],
+    mixins: [drawMixin],
     data() {
       return {
         listLeft: [{
@@ -69,14 +81,34 @@ import {drawMixin} from '@/utils/layout'
     },
     mounted() {
       this.beforeDestroy()
-
     },
 
     methods: {
+      btn(index) {
+        switch (index) {
+          case 1:
+
+            break;
+          case 2:
+            break;
+
+          case 3:
+            this.$router.push('/ana')
+            break;
+          default:
+            break;
+        }
+      },
 
       over(index) {
-        this.listLeft[index].transfer = this.listLeft[index].url;
-        this.listLeft[index].url = this.listLeft[index].url2
+
+        if (index) {
+          this.listLeft[index].transfer = this.listLeft[index].url;
+          this.listLeft[index].url = this.listLeft[index].url2
+        } else {
+          this.listLeft[0].transfer = this.listLeft[0].url;
+          this.listLeft[0].url = this.listLeft[0].url2
+        }
       },
       rightOver(index) {
         this.listRight[index].transfer = this.listRight[index].url;
@@ -86,7 +118,11 @@ import {drawMixin} from '@/utils/layout'
         this.listRight[index].url = this.listRight[index].transfer
       },
       out(index) {
-        this.listLeft[index].url = this.listLeft[index].transfer
+        if (index) {
+          this.listLeft[index].url = this.listLeft[index].transfer
+        } else {
+          this.listLeft[0].url = this.listLeft[0].transfer
+        }
       }
     }
   }
@@ -94,109 +130,117 @@ import {drawMixin} from '@/utils/layout'
 </script>
 
 <style lang="less" scoped>
-.btn_left {
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 10px;
+  .btn_left {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 10px;
 
-  .left1 {
-    width: 100%;
-    height: 65%;
-    display: flex;
+    .left1 {
+      width: 100%;
+      height: 65%;
+      display: flex;
 
-
-
-    div {
-      margin-top: 8px;
-      width: 120px;
-      height: 100%;
-      position: relative;
-      cursor: pointer;
-
-
-      img {
-        width: 100%;
-        height: 70%;
+      .left1_fh {
+        p {
+          position: absolute;
+          left: 44px;
+          top: 7px;
+        }
       }
 
-      p {
-        position: absolute;
-        left: 24px;
-        top: 7px;
+      div {
+        margin-top: 8px;
+        width: 120px;
+        height: 100%;
+        position: relative;
+        cursor: pointer;
+
+
+        img {
+          width: 100%;
+          height: 70%;
+        }
+
+        p {
+          position: absolute;
+          left: 24px;
+          top: 7px;
+          color: white;
+        }
       }
+
+
+
     }
-
-
-
   }
-}
 
-.btn_right {
-  height: 100%;
-  right: 10px;
-  position: absolute;
-  top: 0px;
+  .btn_right {
+    height: 100%;
+    right: 10px;
+    position: absolute;
+    top: 0px;
 
-  .right {
-    width: 100%;
-    height: 65%;
-    display: flex;
+    .right {
+      width: 100%;
+      height: 65%;
+      display: flex;
 
-    div {
-      margin-top: 8px;
-      width: 120px;
-      height: 100%;
-      position: relative;
-      cursor: pointer;
+      div {
+        margin-top: 8px;
+        width: 120px;
+        height: 100%;
+        position: relative;
+        cursor: pointer;
 
 
-      img {
-        width: 100%;
-        height: 70%;
+        img {
+          width: 100%;
+          height: 70%;
+        }
+
+        p {
+          position: absolute;
+          right: 25px;
+          top: 7px;
+          color: white;
+        }
+
+
       }
 
-      p {
-        position: absolute;
-        right: 25px;
-        top: 7px;
+      div:last-child p {
+        left: 35px;
       }
 
-
     }
-
-    div:last-child p {
-      left: 35px;
-    }
-
   }
-}
 
-.title {
-  text-align: center;
-  line-height: 70px;
-  font-size: 30px;
-  font-weight: 700;
-  color: white;
-  // position: relative;
-  // // width: 500px;
-  // text-align: center;
-  // background-size: cover;
-  // color: transparent;
-  // height: 60px;
-  // line-height: 86px;
+  .title {
+    text-align: center;
+    line-height: 70px;
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+    // position: relative;
+    // // width: 500px;
+    // text-align: center;
+    // background-size: cover;
+    // color: transparent;
+    // height: 60px;
+    // line-height: 86px;
 
-  // .title-text {
-  //     font-size: 38px;
-  //     font-weight: 900;
-  //     letter-spacing: 6px;
-  //     width: 100%;
-  //     color: white;
-  //     // background: linear-gradient(92deg, #ffffff 0%, #ffffff 48.8525390625%, #ffffff 100%);
-  //     text-shadow: 0px 7px 4px #012d4f;
-  //     // -webkit-background-clip: text;
-  //     // -webkit-text-fill-color: transparent;
-  // }
-}
+    // .title-text {
+    //     font-size: 38px;
+    //     font-weight: 900;
+    //     letter-spacing: 6px;
+    //     width: 100%;
+    //     color: white;
+    //     // background: linear-gradient(92deg, #ffffff 0%, #ffffff 48.8525390625%, #ffffff 100%);
+    //     text-shadow: 0px 7px 4px #012d4f;
+    //     // -webkit-background-clip: text;
+    //     // -webkit-text-fill-color: transparent;
+    // }
+  }
 
 </style>

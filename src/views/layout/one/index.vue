@@ -12,23 +12,46 @@
         <el-row>
           <el-col :span="6">
             <div :style="{ height: kHOne + 'px'}" style="padding:10px">
-              <ChartTitle title="数据概况"/>
-              <DataOverview :chart-data="sjgkList"/>
+              <ChartTitle title="数据概况" />
+              <DataOverview :chart-data="sjgkList" />
             </div>
+
             <div :style="{ height: kHTwo + 'px'}" style="padding:10px; position:relative;">
-              <ChartTitle title="数据调用趋势图"/>
-              <chartSelect :options.sync="options" @changeFn= "changeFn"/>
+              <ChartTitle title="数据调用趋势图" />
+              <chartSelect :options.sync="options" @changeFn="changeFn" />
               <ChartLine :chart-option="{}" chart-id="lineChart" :chart-data="lineChart"></ChartLine>
             </div>
-            <div :style="{ height: kHTwo + 'px'}">
-              <dv-border-box-12 style="padding:12px">
 
-              </dv-border-box-12>
+            <div :style="{ height: kHTwo + 'px'}" style="padding:10px">
+              <ChartTitle title="数据使用情况" />
+              <div class="pie_box">
+                <div class="pie_bg">
+                  <EchartPie class="pieChart" :height="100+'%'" :chart-option="{}" chart-id="pieChart"
+                    :chart-data="pieChartData" />
+                </div>
+                <div class="sj_box">
+                  <div class="pie-sj" v-for="(item , index) in pieChartData.data">
+                    <p>{{item.value}}</p>
+                    <span>{{item.name}}</span>
+
+                    <div style="width: 10px; height: 10px;  border-radius: 50%;"
+                      :style="{background:item.name == '已经归集数'? 'rgba(0,108,209)':'rgba(112,183,250)'}">
+                    </div>
+                  </div>
+                  <!-- 
+                  <div class="pie-sj">
+                    <p>22</p>
+                    <span>未归集数</span>
+                    <div style="width: 10px; height: 10px; background: rgba(0,108,209); border-radius: 50%;"></div>
+                  </div> -->
+                </div>
+
+
+
+              </div>
             </div>
 
-
           </el-col>
-
           <el-col :span="12">
             <div :style="{ height: kHThree + 'px'}">
               <dv-border-box-12 style="padding:12px">
@@ -66,33 +89,39 @@
 </template>
 
 <script>
-import * as echarts from 'echarts'
-import DataOverview from '@/components/echarts1/DataOverview.vue'
-import ChartLine from '@/components/echarts1/chartLine.vue'
-import ChartTitle from '@/components/chartTitle.vue'
-import chartSelect from '@/components/chartSelect.vue'
+  import * as echarts from 'echarts'
+  import DataOverview from '@/components/echarts1/DataOverview.vue'
+  import ChartLine from '@/components/echarts1/chartLine.vue'
+  import ChartTitle from '@/components/chartTitle.vue'
+  import chartSelect from '@/components/chartSelect.vue'
   import Header from '@/components/Header.vue';
+  import EchartPie from '@/components/echarts1/chartPie.vue'
   import {
     drawMixin
   } from '@/utils/layout'
+  import {
+    dataMixin
+  } from '@/utils/dataMixin'
   import {
     formatTime
   } from '@//utils/index.js'
 
   export default {
     name: 'index',
-    mixins: [drawMixin],
+    mixins: [drawMixin, dataMixin],
     components: {
       Header,
       ChartTitle,
       DataOverview,
       ChartLine,
-      chartSelect
+      chartSelect,
+      EchartPie
     },
     data() {
       return {
-        sjgkList:[],
-        lineChart:{},
+        // sjgkList: [],
+        // lineChart: {},
+        // pieChartData: {},
         options: [{
           value: '1',
           label: '1月'
@@ -103,44 +132,7 @@ import chartSelect from '@/components/chartSelect.vue'
 
     },
     mounted() {
-      //数据概况
-      this.sjgkList=[
-        {
-          name:'重大应用数',
-          value:'88'
-        },
-        {
-          name:'数据编目总数',
-          value:'98'
-        },
-        {
-          name:'数据归集总数',
-          value:'88'
-        },
-        {
-          name:'数据申请总数',
-          value:'88'
-        },
-        {
-          name:'数据共享总数',
-          value:'88'
-        },
-        {
-          name:'数据调用总次数',
-          value:'88'
-        }
-      ]
-
-      //数据调用趋势
-      this.lineChart={
-        xAxis:['1月', '2月', '3月', '4月', '5月', '6月'],
-        seriesData: [
-          {
-            data1:[25, 75, 48, 65, 87, 13],
-            data2:[65, 108, 315, 471, 210, 612]
-          }
-        ]
-      }
+      console.log(this.pieChartData);
 
 
       this.ModifyHeight()
@@ -148,7 +140,7 @@ import chartSelect from '@/components/chartSelect.vue'
     },
 
     methods: {
-      changeFn(val){
+      changeFn(val) {
         console.log(val)
       },
       ModifyHeight() {
@@ -163,4 +155,46 @@ import chartSelect from '@/components/chartSelect.vue'
 </script>
 
 <style lang="less" scoped>
+  .pie_box {
+    margin: 0 auto;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+
+    .pie_bg {
+      height: 200px;
+      width: 200px;
+
+      background-image: url('@/assets/images/h-pie.png');
+      background-repeat: no-repeat;
+      background-position: 100% 100%;
+      background-size: 100%;
+    }
+
+    .sj_box {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .pie-sj {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+
+        p {
+          font-size: 20px;
+        }
+
+        span {
+          font-size: 12px;
+          padding: 5px 0;
+        }
+      }
+    }
+  }
+
 </style>
