@@ -4,12 +4,12 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'login',
     component: () => import('../views/login.vue')
   },
   {
-    path: '/index',
+    path: '/',
     name: 'index',
     component: () => import('../views/home.vue')
   },
@@ -37,6 +37,14 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path == '/login') return next()
+  //获取token
+  let tokenStr = JSON.parse(localStorage.getItem('token'))
+  if (!tokenStr) return next('/login')
+  next()
 })
 
 export default router

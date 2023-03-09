@@ -1,66 +1,14 @@
-// import axios from 'axios'
-// import { Message } from 'element-ui'
-
-// // create an axios instance
-// const service = axios.create({
-//   //baseURL: process.env.VUE_BASE_API,
-//   //baseURL: 'http://39.105.180.35:8188',
-//   baseURL: 'http://192.168.0.43:8100/api',
-//   timeout: 8000,// request timeout 设置请求超时时间，单位（毫秒）
-//   headers: {
-//     'Content-Type': 'application/x-www-form-urlencoded',
-//     'token': 'QYCz6SnXiBlEeFN/wIeEO8iraAhG9m4Ok0AYlk4gQ8spNPbMDDq6a4QANTbGg3EFueIaczI4zxFPRwGF3ym5MQ=='
-//   }
-// })
-
-// // response interceptor 响应拦截
-// service.interceptors.response.use(
-//   response => {
-//     const res = response.data // response.data里面的数据才是后台返回给我们的数据  200  500
-//     // 200  500 后端这几个特定异常判断没有问题后，才能放行，进行相应数据
-//     if (res.code === 500) {
-//       Notification.error({
-//         title: '服务器内部出现异常，请联系管理员'
-//       })
-//       return Promise.reject('error')// 记录错误
-//     } else if (res.code === 400) { // 可能是其它参数出错
-//       Notification.error({
-//         title: res.msg
-//       })
-//       return Promise.reject('error')// 记录错误
-//     } else {
-//       // 以上验证通过之后再放行
-//       return res
-//     }
-//   },
-//   error => {
-//     console.log('err' + error) // for debug
-//     Message({
-//       //message: error.message,
-//       message: "接口数据异常，请联系管理员",
-//       showClose: true,
-//       dangerouslyUseHTMLString: true,
-//       type: 'error',
-//       duration: 3 * 1000
-//     })
-//     return Promise.reject(error)
-//   }
-// )
-
-// export default service
-
 
 import axios from 'axios'
-import confing from './confing'
-const service = axios.create({
-  // baseURL: confing.baseURL,
-  // timeout: 10000,
+import router from '@/router'
+let tokenstr = JSON.parse(localStorage.getItem('token'))
 
-  // baseURL: process.env.NODE_ENV === 'production' ? confing.baseURL : confing.baseURL,
-  baseURL: 'http://192.168.0.43:8100/api',
+const service = axios.create({
+  timeout: 10000,
+  baseURL: process.env.VUE_APP_API_BASEURL,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
-    'token': 'QYCz6SnXiBlEeFN/wIeEO8iraAhG9m4Ok0AYlk4gQ8spNPbMDDq6a4QANTbGg3EFueIaczI4zxFPRwGF3ym5MQ=='
+    'token': tokenstr
   }
 })
 
@@ -78,17 +26,10 @@ service.interceptors.request.use(function (config) {
     config.data = qs(config.data)
   }
 
-
-
-
-  // 在发送请求之前做些什么 传token
-  // let token = 'QYCz6SnXiBlEeFN/wIeEO8iraAhG9m4Ok0AYlk4gQ8spNPbMDDq6a4QANTbGg3EFueIaczI4zxFPRwGF3ym5MQ=='
-  // config.headers['Authorization'] = `Bearer ${token}`
-  // config.headers['Content-Type'] = "application/x-www-form-urlencoded";
   return config
+
 }, function (error) {
   // 对请求错误做些什么
-  console.log(error)
   return Promise.reject(error);
 });
 
@@ -102,11 +43,31 @@ service.interceptors.response.use(response => {
   }
   /**
  * @code 登录过期 token验证失败 根据后端调 
+ * 
  */
+  // if (!response.data.data.uuid) {
+  //   // if (tokenstr == null) {
+  //   //   console.log('跳转了');
+  //   //   router.replace('/')
+
+  //   // }
+  // }
   // if (response.data.code == UtilVar.code) {
-  //     // router.push("/login")
+  //   // router.push("/login")
+  // }
+  // if (tokenstr == null) {
+
+  //   window.location.replace(window.location.href)
+  //   console.log(tokenstr);
+  //   console.log('打印了');
+  //   // router.replace("/")
+  //   // console.log(router.replace);
+
+  //   // this.$router.replace("/")
+  //   // console.log('token没了');
   // }
   return response.data
+
 }, error => {
   // console.log('axiosError',error);
   let err = {

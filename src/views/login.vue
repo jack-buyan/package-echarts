@@ -16,7 +16,6 @@
               <el-input type="text" v-model="loginForm.code" autocomplete="off" placeholder="请输入图形验证码"></el-input>
               <img :src="url" @click="changeCode" alt="">
             </el-form-item>
-
             <el-button type="primary" class="deng" style="width:400px;" @click="btnLogin">登录
             </el-button>
           </el-form>
@@ -34,13 +33,16 @@
     loginYz,
     login
   } from '@/api/login'
+  import cryptoObj from '@/utils/cryp'
+
   export default {
     data() {
       return {
         loginForm: {
           loginName: "",
           password: "",
-          code: ""
+          code: "",
+          uuid: ''
         },
         url: '',
         rules: {
@@ -53,6 +55,11 @@
             required: true,
             message: "请输入登录密码",
             trigger: "blur"
+          }],
+          code: [{
+            required: true,
+            message: "请输入验证码",
+            trigger: "blur"
           }]
         }
       }
@@ -62,11 +69,29 @@
         this.$refs.loginForm.validate((valid) => {
           if (valid) {
             login(this.loginForm).then(res => {
-              console.log(res);
-            })
+              if (res.code == 0) {
+                this.refResh()
+                localStorage.setItem('token', JSON.stringify(cryptoObj.encryptFunc(
+                  `${this.loginForm.loginName}&${this.loginForm.password}&${cryptoObj.gettime()}`)))
+                this.$router.replace('/')
 
+
+              } else {
+                this.$message.error(res.msg);
+              }
+            }).catch(err => {
+              this.$message.error(err.msg);
+            })
+            this.getLoginYz()
           }
         })
+      },
+      refResh() {
+        // 存第一份点击的时间
+        sessionStorage.setItem("lastClickTime", new Date().getTime());
+        // 存一个token
+        sessionStorage.setItem('token', JSON.stringify(cryptoObj.encryptFunc(
+          `${this.loginForm.loginName}&${this.loginForm.password}&${cryptoObj.gettime()}`)))
       },
 
       // login(formName) {
@@ -102,6 +127,8 @@
       async getLoginYz() {
         const res = await loginYz()
         this.url = res.data.imgpath
+        this.loginForm.uuid = res.data.uuid
+
 
       },
 
@@ -112,6 +139,7 @@
     created() {
       this.enterLogin();
       this.getLoginYz()
+
     },
   }
 

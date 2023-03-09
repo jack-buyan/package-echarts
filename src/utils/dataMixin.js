@@ -11,6 +11,7 @@ export const dataMixin = {
 
     },
     mounted() {
+
         //数据概况
         this.sjgkList = [{
             name: '重大应用数',

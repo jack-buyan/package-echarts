@@ -49,6 +49,7 @@
     mixins: [drawMixin],
     data() {
       return {
+        timer: null,
         listLeft: [{
             url: require('../assets/images/btn_left.png'),
             url2: require('../assets/images/hover_left.png'),
@@ -81,9 +82,52 @@
     },
     mounted() {
       this.beforeDestroy()
+
+      //绑定时器
+      this.isTimeOut();
+    },
+    created() {
+
+      //监听点击时间把点击的时间存起来
+      window.addEventListener("click", () => {
+          // 为了方便，把点击事件的时间直接存到sessionStorage中去，这样方便获取比较
+          sessionStorage.setItem("lastClickTime", new Date().getTime());
+        },
+        true
+      );
+    },
+    beforeDestroy() {
+      // 离开页面的时候，清除一下定时器，也解绑点击事件
+      clearInterval(this.timer);
+      window.removeEventListener("click", () => {}, true);
     },
 
     methods: {
+      isTimeOut() {
+        // 使用定时器之前，要清除一下定时器
+        clearInterval(this.timer);
+        this.timer = setInterval(() => {
+          let lastClickTime = sessionStorage.getItem("lastClickTime") * 1; // 把上次点击时候的字符串时间转换成数字时间
+          let nowTime = new Date().getTime(); // 获取当前时间
+          console.log("当前时间和之前点击时间", nowTime, lastClickTime);
+          // 假设我们需求是：5秒钟不进行点击操作，就提示登录退出
+          if (nowTime - lastClickTime > 1000 * 5) {
+            // 提示一下用户
+            this.$message({
+              type: "error",
+              message: "超时了，已退出登录"
+            });
+            //清除token
+            localStorage.removeItem('token')
+            // 这里要清除定时器，结束任务
+            clearInterval(this.timer);
+            // 最后返回到登录页
+            this.$router.push({
+              path: "/login"
+            });
+          }
+        }, 1000);
+      },
       btn(index) {
         switch (index) {
           case 1:

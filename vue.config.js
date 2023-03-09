@@ -36,10 +36,12 @@ module.exports = defineConfig({
   // }
 
   devServer: {
+    open: false, //运行后自动打开浏览器
+    port: process.env.VUE_APP_PORT, //挂载端口
     // 配置多个代理
     proxy: {
       '/api': {
-        target: 'http://192.168.0.43:8100/api',
+        target: process.env.VUE_APP_API_BASEURL,
         // https://geo.datav.aliyun.com/areas_v3
         ws: false,
         changeOrigin: true,  //是否允许跨域
