@@ -1,15 +1,18 @@
 
 import axios from 'axios'
-import router from '@/router'
+let baseURL = "/api";
+if (process.env.NODE_ENV === 'production') {
+  baseURL = process.env.VUE_APP_API_BASEURL;
+}
 let tokenstr = JSON.parse(localStorage.getItem('token'))
 
 const service = axios.create({
   timeout: 10000,
-  baseURL: process.env.VUE_APP_API_BASEURL,
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'token': tokenstr
-  }
+  baseURL,
+   headers: {
+     'Content-Type': "application/x-www-form-urlencoded;charset=UTF-8",
+     'token': tokenstr
+   }
 })
 
 function qs(data) {
@@ -25,7 +28,8 @@ service.interceptors.request.use(function (config) {
   if (config.data) {
     config.data = qs(config.data)
   }
-
+  // config.headers['Authorization'] = `Bearer ${tokenstr}`
+  // config.headers['Content-Type'] = "application/x-www-form-urlencoded;charset=UTF-8";
   return config
 
 }, function (error) {
@@ -41,9 +45,10 @@ service.interceptors.response.use(response => {
   if (response.status !== 200) {
     return Promise.reject(response)
   }
+
   /**
- * @code 登录过期 token验证失败 根据后端调 
- * 
+ * @code 登录过期 token验证失败 根据后端调
+ *
  */
   // if (!response.data.data.uuid) {
   //   // if (tokenstr == null) {

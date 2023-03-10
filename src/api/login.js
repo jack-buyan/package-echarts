@@ -5,7 +5,10 @@ export const login = (data) => {
     return request({
         url: '/jsclogin/jscUserLogin',
         method: 'post',
-        data
+        data,
+      headers: {
+        'token': JSON.parse(localStorage.getItem('token'))
+      }
     })
 }
 
@@ -17,3 +20,4 @@ export const loginYz = () => {
 
     })
 }
+

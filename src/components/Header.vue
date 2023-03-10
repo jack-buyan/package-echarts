@@ -38,6 +38,8 @@
   import {
     drawMixin
   } from '@/utils/layout'
+  import {dataMixin} from '@/utils/dataMixin'
+
   export default {
     name: 'Header',
     props: {
@@ -46,7 +48,7 @@
         default: '标题'
       }
     },
-    mixins: [drawMixin],
+    mixins: [drawMixin,dataMixin],
     data() {
       return {
         timer: null,
@@ -109,10 +111,9 @@
         this.timer = setInterval(() => {
           let lastClickTime = sessionStorage.getItem("lastClickTime") * 1; // 把上次点击时候的字符串时间转换成数字时间
           let nowTime = new Date().getTime(); // 获取当前时间
-          console.log("当前时间和之前点击时间", nowTime, lastClickTime);
-          // 假设我们需求是：5秒钟不进行点击操作，就提示登录退出
-          if (nowTime - lastClickTime > 1000 * 5) {
-            // 提示一下用户
+
+          if (nowTime - lastClickTime > 10000 * 1200) {
+
             this.$message({
               type: "error",
               message: "超时了，已退出登录"
@@ -137,6 +138,8 @@
             break;
 
           case 3:
+            this.idrr=10006
+            this.getHomeData()
             this.$router.push('/ana')
             break;
           default:

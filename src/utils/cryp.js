@@ -3,13 +3,15 @@ import router from '@/router'
 var cryptoObj = {
     /* 加密 */
     encryptFunc: (message) => {
-        var key = 'ede16d438c38862c';//前后端约定好的秘钥
+        var key = 'ede16d438c38862c';//前后端的秘钥
         var keyHex = CryptoJS.enc.Utf8.parse(key);
         var encrypted = CryptoJS.AES.encrypt(message, keyHex, {
             mode: CryptoJS.mode.ECB,
             padding: CryptoJS.pad.Pkcs7
         });
         return encrypted.toString();
+
+
 
     },
 

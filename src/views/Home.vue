@@ -7,16 +7,16 @@
 </template>
 
 <script>
-
   import One from '@/views/layout/one/index.vue'
+
   export default {
-    name:'home',
+    name: 'home',
     components: {
       One,
     },
 
-    data(){
-      return{
+    data() {
+      return {
 
       }
     }
@@ -37,7 +37,9 @@
     overflow: hidden;
 
   }
-::v-deep .screen-wrapper{
-  //transform: scale(1, 0.98 );
-}
+
+  ::v-deep .screen-wrapper {
+    //transform: scale(1, 0.98 );
+  }
+
 </style>

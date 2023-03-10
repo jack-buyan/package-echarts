@@ -16,7 +16,8 @@
               <el-input type="text" v-model="loginForm.code" autocomplete="off" placeholder="请输入图形验证码"></el-input>
               <img :src="url" @click="changeCode" alt="">
             </el-form-item>
-            <el-button type="primary" class="deng" style="width:400px;" @click="btnLogin">登录
+            <el-button type="primary" class="deng" style="width:400px;" @click="btnLogin">
+              登录
             </el-button>
           </el-form>
 
@@ -29,10 +30,8 @@
 </template>
 
 <script>
-  import {
-    loginYz,
-    login
-  } from '@/api/login'
+  import md5 from 'js-md5'
+  import { loginYz, login } from '@/api/login'
   import cryptoObj from '@/utils/cryp'
 
   export default {
@@ -69,12 +68,22 @@
         this.$refs.loginForm.validate((valid) => {
           if (valid) {
             login(this.loginForm).then(res => {
+
               if (res.code == 0) {
-                this.refResh()
+                let tokenStr = md5(this.loginForm.password).toUpperCase() //md5加密
+
+                // for(let i = 0; i < tokenStr.length; i++){
+                //   if (tokenStr[i] == 'a') {
+                //     tokenStr= tokenStr.replace('a','A')
+                //   }
+                // }
+
                 localStorage.setItem('token', JSON.stringify(cryptoObj.encryptFunc(
-                  `${this.loginForm.loginName}&${this.loginForm.password}&${cryptoObj.gettime()}`)))
+                  `${this.loginForm.loginName}&${tokenStr}&${cryptoObj.gettime()}`)))
                 this.$router.replace('/')
 
+
+                this.refResh()
 
               } else {
                 this.$message.error(res.msg);
@@ -94,26 +103,10 @@
           `${this.loginForm.loginName}&${this.loginForm.password}&${cryptoObj.gettime()}`)))
       },
 
-      // login(formName) {
-      //   this.$refs.loginForm.validate((valid) => {
-
-      //     if (valid) {
-      //       // const res = await login(this.loginForm)
-      //       // console.log(res);
-      //       login(this.loginForm).then(res => {
-      //         console.log(res);
-      //       })
-      //       console.log(this.loginForm);
-      //       // this.$router.push({
-      //       //   path: "/index"
-      //       // });
-      //     } else {
-      //       this.$message.error('密码有问题');
-      //     }
-      //   })
-      // },
       enterLogin() {
+
         document.onkeydown = (e) => {
+
           e = window.event || e;
           if (
             this.$route.path == "/" &&
@@ -137,7 +130,7 @@
       }
     },
     created() {
-      this.enterLogin();
+      this.enterLogin()
       this.getLoginYz()
 
     },

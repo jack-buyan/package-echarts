@@ -6,7 +6,7 @@
     <!-- 总体布局-start -->
     <div v-else class="koi-body">
       <!-- 第一部分-头部-start -->
-      <Header title="嘉数数据分析驾驶舱" />
+      <Header title="嘉数数据分析驾驶舱"/>
       <!-- Element-UI Layout布局 -->
       <div class="layoutHome">
         <el-row>
@@ -38,7 +38,7 @@
                       :style="{background:item.name == '已经归集数'? 'rgba(0,108,209)':'rgba(112,183,250)'}">
                     </div>
                   </div>
-                  <!-- 
+                  <!--
                   <div class="pie-sj">
                     <p>22</p>
                     <span>未归集数</span>
@@ -90,6 +90,9 @@
 
 <script>
   import * as echarts from 'echarts'
+  import {
+    getOneDataAPI
+  } from '@/api/index'
   import DataOverview from '@/components/echarts1/DataOverview.vue'
   import ChartLine from '@/components/echarts1/chartLine.vue'
   import ChartTitle from '@/components/chartTitle.vue'
@@ -121,9 +124,6 @@
     },
     data() {
       return {
-        // sjgkList: [],
-        // lineChart: {},
-        // pieChartData: {},
         fatherName: [],
         options: [{
           value: '1',
@@ -132,17 +132,33 @@
       }
     },
     created() {
-
+      this.getHomeData()
     },
     mounted() {
+
       this.fatherName = this.zdDataTable
-
-
       this.ModifyHeight()
       this.beforeDestroy()
+
     },
 
     methods: {
+      // getHomeData() {
+      //   let data = {
+      //     idrr: '100'
+      //   }
+      //
+      //   getOneDataAPI(data).then(res => {
+      //     console.log(res);
+      //   })
+      // },
+      // async getHomeData() {
+      //   let data = {
+      //     idrr: '100'
+      //   }
+      //   const res = await getOneDataAPI(data)
+      //   console.log(res);
+      // },
       changeFn(val) {
 
       },

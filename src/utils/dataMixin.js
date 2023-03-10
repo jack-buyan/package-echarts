@@ -1,10 +1,13 @@
+
+import { getOneDataAPI } from '@/api/index'
 export const dataMixin = {
     data() {
         return {
             sjgkList: [],
             lineChart: {},
             pieChartData: {},
-            zdDataTable: []
+            zdDataTable: [],
+            idrr: 100
         }
     },
     created() {
@@ -72,7 +75,10 @@ export const dataMixin = {
         ]
     },
     methods: {
-
+        async getHomeData() {
+            const res = await getOneDataAPI({ idrr: this.idrr })
+            console.log(res,'混入');
+        }
     },
 
 }
